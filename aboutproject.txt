@@ -1,0 +1,78 @@
+================================================================================
+                           MILO AI - ABOUT THE PROJECT
+================================================================================
+
+PROJECT OVERVIEW
+--------------------------------------------------------------------------------
+MILO AI is a full-stack, intelligent personal AI assistant application built to 
+provide users with a seamless, interactive chat interface powered by Google's 
+latest Gemini 2.5 Flash model. The application features user authentication, 
+persistent chat histories, file attachment analysis with daily usage tracking, 
+and a modern responsive UI.
+
+TECH STACK
+--------------------------------------------------------------------------------
+Frontend:
+  - Framework: React (Vite build tool)
+  - Styling: Tailwind CSS & Vanilla CSS (Glassmorphism & dark theme design system)
+  - Icons: Material Symbols Outlined & SVG icons
+  - HTTP Client: Fetch API with custom service wrappers & auth token handling
+
+Backend:
+  - Framework: Python 3.12+ with FastAPI
+  - Web Server: Uvicorn ASGI server
+  - Database & ORM: SQLite with SQLAlchemy ORM
+  - Authentication: Passlib (Bcrypt password hashing) & PyJWT (JSON Web Tokens)
+  - Environment Management: Python-Dotenv
+  - CORS Middleware: FastAPI CORSMiddleware with configurable allowed origins
+
+AI & Machine Learning Engine:
+  - SDK: google-generativeai Python SDK
+  - Model: Google Gemini 2.5 Flash (`gemini-2.5-flash`)
+  - Integration: Contextual prompt formatting for multi-line inputs & file content analysis
+
+KEY FEATURES
+--------------------------------------------------------------------------------
+1. Secure Authentication & User Accounts:
+   - User Registration with email validation & password hashing.
+   - JWT-based authentication with secure token storage in browser storage.
+   - Protected API routes requiring Bearer Token verification.
+
+2. Conversational AI Chat Interface:
+   - Powered by Google Gemini 2.5 Flash for ultra-fast, accurate responses.
+   - Automated chat title generation based on initial user prompts.
+   - Real-time message streaming display with markdown formatting support.
+   - Welcome messages and customizable quick prompt starter cards.
+
+3. Document & File Analysis:
+   - Ability to upload code snippets, text files, and documents directly into chat.
+   - Backend automatically formats attached file content into AI prompt context.
+   - Allows users to ask specific questions about uploaded file contents.
+
+4. Daily File Upload Quota Management:
+   - Rate limiting system enforcing a maximum of 2 file uploads per day per user.
+   - Database-backed tracking calculated relative to UTC start of day.
+   - Real-time frontend progress indicators showing remaining daily quota.
+
+5. Chat Session & Message Persistence:
+   - Full persistence of chat sessions and chat message logs in SQLite database.
+   - Ability to list recent chat histories, switch between past conversations, or delete sessions.
+   - Automatic background purge of empty chat sessions (sessions without messages).
+
+6. Error Handling & System Resilience:
+   - Graceful detection and UI notifications for API quota exhaustion (HTTP 429).
+   - Clear authorization error handling for invalid or missing API keys (HTTP 401).
+   - Auto-reloading backend environment variable support.
+
+ENVIRONMENT CONFIGURATION
+--------------------------------------------------------------------------------
+- GEMINI_API_KEY: Secret Google Gemini API Key obtained from Google AI Studio.
+- GEMINI_MODEL: AI model identifier (defaults to `gemini-2.5-flash`).
+- SECRET_KEY: JWT signing secret key for authentication tokens.
+- ALLOWED_ORIGINS: Configurable CORS origin whitelist for production & development.
+
+DEPLOYMENT PREPARATION
+--------------------------------------------------------------------------------
+- Render Ready: Configured via `render.yaml` for automatic deployment of backend web services on Render.
+- Environment Injection: Safe separation of secret keys via cloud dashboard environment variables.
+================================================================================
