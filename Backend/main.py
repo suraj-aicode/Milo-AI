@@ -21,12 +21,12 @@ Base.metadata.create_all(bind=engine)
 env_path = Path(__file__).resolve().parent / ".env"
 load_dotenv(dotenv_path=env_path)
 
-api_key = os.getenv("GEMINI_API_KEY")
+api_key = os.getenv("GEMINI_API_KEY", "").strip()
 if not api_key:
     print("WARNING: GEMINI_API_KEY not found in environment variables or .env file.")
 
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel("gemini-2.5-flash")
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 app = FastAPI(title="Aether AI Backend API")
 
@@ -363,7 +363,7 @@ def generate_response(
                 status_code=429,
                 detail="⚠️ API Key credits or quota exhausted. Please update your GEMINI_API_KEY in backend .env or check your API usage limits."
             )
-        elif any(kw in err_msg for kw in ["api_key", "invalid_argument", "unauthorized", "auth"]):
+        elif any(kw in err_msg for kw in ["api_key_invalid", "api key not valid", "unauthorized", "permission_denied", "invalid_api_key"]):
             raise HTTPException(
                 status_code=401,
                 detail="⚠️ Invalid or unauthorized GEMINI_API_KEY. Please verify your API key configuration."
