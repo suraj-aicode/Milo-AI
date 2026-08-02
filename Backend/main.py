@@ -19,14 +19,16 @@ Base.metadata.create_all(bind=engine)
 
 # Load .env relative to main.py directory
 env_path = Path(__file__).resolve().parent / ".env"
-load_dotenv(dotenv_path=env_path)
+load_dotenv(dotenv_path=env_path, override=True)
 
-api_key = os.getenv("GEMINI_API_KEY", "").strip()
-if not api_key:
-    print("WARNING: GEMINI_API_KEY not found in environment variables or .env file.")
+api_key = os.getenv("GEMINI_API_KEY", "").strip() or os.getenv("GOOGLE_API_KEY", "").strip()
+if api_key:
+    genai.configure(api_key=api_key)
+else:
+    print("WARNING: Neither GEMINI_API_KEY nor GOOGLE_API_KEY found in environment variables or .env file.")
 
-genai.configure(api_key=api_key)
-model = genai.GenerativeModel("gemini-1.5-flash")
+model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+model = genai.GenerativeModel(model_name)
 
 app = FastAPI(title="Aether AI Backend API")
 
@@ -331,8 +333,18 @@ def generate_response(
         db.commit()
 
     # 2. Call Gemini API
+    active_key = os.getenv("GEMINI_API_KEY", "").strip() or os.getenv("GOOGLE_API_KEY", "").strip()
+    if not active_key:
+        raise HTTPException(
+            status_code=401,
+            detail="⚠️ Missing GEMINI_API_KEY. Please verify your API key is set in Backend/.env or environment variables."
+        )
+    genai.configure(api_key=active_key)
+
     try:
-        response = model.generate_content(full_api_prompt)
+        active_model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+        active_model = genai.GenerativeModel(active_model_name)
+        response = active_model.generate_content(full_api_prompt)
         text_content = getattr(response, "text", "")
         if not text_content and hasattr(response, "candidates") and response.candidates:
             for candidate in response.candidates:
@@ -356,6 +368,8 @@ def generate_response(
             "session_title": session.title if session else None
         }
 
+    except HTTPException:
+        raise
     except Exception as e:
         err_msg = str(e).lower()
         if any(kw in err_msg for kw in ["429", "quota", "resourceexhausted", "resource_exhausted", "credit", "exceeded", "limit"]):
@@ -363,10 +377,10 @@ def generate_response(
                 status_code=429,
                 detail="⚠️ API Key credits or quota exhausted. Please update your GEMINI_API_KEY in backend .env or check your API usage limits."
             )
-        elif any(kw in err_msg for kw in ["api_key_invalid", "api key not valid", "unauthorized", "permission_denied", "invalid_api_key"]):
+        elif any(kw in err_msg for kw in ["api_key", "adc", "unauthorized", "permission_denied", "invalid"]):
             raise HTTPException(
                 status_code=401,
-                detail="⚠️ Invalid or unauthorized GEMINI_API_KEY. Please verify your API key configuration."
+                detail="⚠️ Invalid or unauthorized GEMINI_API_KEY. Please verify your API key in the backend environment."
             )
         else:
             raise HTTPException(status_code=500, detail=f"Gemini API Error: {str(e)}")

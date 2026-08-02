@@ -549,7 +549,7 @@ export default function Chat({ user, onLogout, isDarkMode, toggleDarkMode }) {
                   auto_awesome
                 </span>
                 <span className="font-label-md text-label-md font-bold">
-                  MILO 1.5 Flash
+                  MILO 2.5 Flash
                 </span>
               </div>
             </div>
