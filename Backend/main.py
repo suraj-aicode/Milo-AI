@@ -30,9 +30,12 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 
 app = FastAPI(title="Aether AI Backend API")
 
+raw_origins = os.getenv("ALLOWED_ORIGINS", "*")
+origins = [o.strip() for o in raw_origins.split(",") if o.strip()] if raw_origins and raw_origins != "*" else ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
