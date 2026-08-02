@@ -1,0 +1,108 @@
+body {
+  font-family: 'Geist', sans-serif;
+  background: #f8f9ff;
+  color: #0f1c2b;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.glass-surface {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.liquid-bg {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 75% 25%, #d6e3ff 0%, transparent 40%),
+              radial-gradient(circle at 25% 75%, #e7deff 0%, transparent 40%),
+              radial-gradient(circle at 50% 50%, #f8f9ff 0%, transparent 100%);
+  z-index: -1;
+  animation: drift 30s ease-in-out infinite alternate;
+  transition: background 0.5s ease;
+}
+
+.liquid-gradient-bg {
+  background: radial-gradient(circle at 10% 20%, rgba(111, 168, 255, 0.08) 0%, transparent 40%),
+              radial-gradient(circle at 90% 80%, rgba(203, 190, 255, 0.1) 0%, transparent 40%);
+}
+
+.glass-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(111, 168, 255, 0.15) 0%, rgba(203, 190, 255, 0.1) 100%);
+  filter: blur(40px);
+  z-index: -1;
+  animation: float 20s infinite ease-in-out;
+}
+
+/* Dark Mode Overrides (#242423 Light-Black Shade) */
+.dark body {
+  background: #242423;
+  color: #f4f4f5;
+}
+
+.dark .glass-surface {
+  background: rgba(36, 36, 35, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.dark .liquid-bg {
+  background: radial-gradient(circle at 75% 25%, #333331 0%, transparent 40%),
+              radial-gradient(circle at 25% 75%, #2a2a29 0%, transparent 40%),
+              radial-gradient(circle at 50% 50%, #242423 0%, transparent 100%);
+}
+
+.dark .text-on-surface {
+  color: #f4f4f5 !important;
+}
+
+.dark .text-on-surface-variant {
+  color: #a1a1aa !important;
+}
+
+.dark input {
+  color: #f4f4f5 !important;
+}
+
+
+@keyframes drift {
+  from { transform: rotate(0deg) scale(1); }
+  to { transform: rotate(5deg) scale(1.1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-40px) scale(1.1); }
+}
+
+.message-fade-in {
+  animation: slideUpFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes slideUpFade {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.input-focus-effect:focus-within {
+  border-color: #135eb0;
+  box-shadow: 0 0 0 4px rgba(19, 94, 176, 0.1);
+}

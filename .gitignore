@@ -1,0 +1,17 @@
+# Environment variables & secrets
+.env
+Backend/.env
+Frontend/.env
+*.env
+
+# SQLite Database files
+*.db
+Backend/app.db
+
+# Dependencies & Build output
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store

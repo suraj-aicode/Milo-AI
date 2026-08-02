@@ -1,0 +1,150 @@
+:root {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --card2: #111827;
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --text: #f8fafc;
+  --text-light: #cbd5e1;
+  --border: #334155;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color: var(--text);
+}
+
+.container {
+  width: min(900px, 92%);
+  margin: 40px auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.header h1 {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.header p {
+  color: var(--text-light);
+  margin-top: 10px;
+  font-size: 17px;
+}
+
+.input-card,
+.response-card {
+  background: rgba(30, 41, 59, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+textarea {
+  width: 100%;
+  height: 260px;
+  resize: none;
+  border: none;
+  outline: none;
+  background: var(--card2);
+  color: white;
+  padding: 18px;
+  font-size: 17px;
+  border-radius: 15px;
+  border: 1px solid var(--border);
+  line-height: 1.7;
+}
+
+textarea::placeholder {
+  color: #94a3b8;
+}
+
+textarea:focus {
+  border-color: var(--primary);
+}
+
+.button-area {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+button {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(99,102,241,.35);
+}
+
+.response-card {
+  margin-top: 30px;
+}
+
+.response-card h2 {
+  margin-bottom: 20px;
+  color: #818cf8;
+}
+
+.response {
+  background: var(--card2);
+  border-radius: 15px;
+  padding: 20px;
+  min-height: 220px;
+  max-height: 500px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  line-height: 1.8;
+  color: #e2e8f0;
+  white-space: pre-wrap;
+}
+
+.response::-webkit-scrollbar {
+  width: 8px;
+}
+
+.response::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 20px;
+}
+
+@media(max-width:768px){
+
+.header h1{
+    font-size:30px;
+}
+
+textarea{
+    height:180px;
+}
+
+button{
+    width:100%;
+}
+
+.button-area{
+    justify-content:center;
+}
+
+}

@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <filter id="drop-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="15" stdDeviation="18" flood-color="#000000" flood-opacity="0.45" />
+    </filter>
+
+    <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+    </filter>
+
+    <filter id="metallic-specular" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur" />
+      <feSpecularLighting in="blur" surfaceScale="5" specularConstant="1.2" specularExponent="35" lighting-color="#ffffff" result="specular">
+        <fePointLight x="250" y="150" z="300" />
+      </feSpecularLighting>
+      <feComposite in="specular" in2="SourceAlpha" operator="in" result="specularClip" />
+      <feBlend in="SourceGraphic" in2="specularClip" mode="screen" />
+    </filter>
+
+    <!-- Gradients -->
+    <radialGradient id="sphere-grad" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="15%" stop-color="#F7F7F7" />
+      <stop offset="45%" stop-color="#CFCFCF" />
+      <stop offset="75%" stop-color="#6E6E6E" />
+      <stop offset="95%" stop-color="#4A4A4A" />
+      <stop offset="100%" stop-color="#2A2A2A" />
+    </radialGradient>
+
+    <radialGradient id="sphere-specular-grad" cx="30%" cy="25%" r="40%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#E8E8E8" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#CFCFCF" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="chrome-ring-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7F7F7" />
+      <stop offset="20%" stop-color="#9E9E9E" />
+      <stop offset="40%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#4A4A4A" />
+      <stop offset="80%" stop-color="#E8E8E8" />
+      <stop offset="100%" stop-color="#6E6E6E" />
+    </linearGradient>
+
+    <linearGradient id="chrome-ring-2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="25%" stop-color="#6E6E6E" />
+      <stop offset="50%" stop-color="#F7F7F7" />
+      <stop offset="75%" stop-color="#4A4A4A" />
+      <stop offset="100%" stop-color="#CFCFCF" />
+    </linearGradient>
+
+    <linearGradient id="chrome-ring-3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E8E8E8" />
+      <stop offset="30%" stop-color="#4A4A4A" />
+      <stop offset="50%" stop-color="#FFFFFF" />
+      <stop offset="70%" stop-color="#9E9E9E" />
+      <stop offset="100%" stop-color="#F7F7F7" />
+    </linearGradient>
+
+    <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6" />
+      <stop offset="50%" stop-color="#E8E8E8" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#CFCFCF" stop-opacity="0" />
+    </radialGradient>
+
+    <style>
+      .main-float {
+        animation: floatAnim 8s ease-in-out infinite;
+        transform-origin: 400px 400px;
+      }
+
+      .glow-layer {
+        animation: glowPulse 4s ease-in-out infinite;
+        transform-origin: 400px 400px;
+      }
+
+      .sphere-group {
+        animation: sphereBreath 5s ease-in-out infinite;
+        transform-origin: 400px 400px;
+      }
+
+      .ring-outer {
+        animation: rotateCW 18s linear infinite;
+        transform-origin: 400px 400px;
+      }
+
+      .ring-middle {
+        animation: rotateCCW 24s linear infinite;
+        transform-origin: 400px 400px;
+      }
+
+      .ring-front {
+        animation: rotateCW 30s linear infinite;
+        transform-origin: 400px 400px;
+      }
+
+      @keyframes floatAnim {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-3px); }
+      }
+
+      @keyframes glowPulse {
+        0%, 100% { opacity: 0.2; }
+        50% { opacity: 0.45; }
+      }
+
+      @keyframes sphereBreath {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+      }
+
+      @keyframes rotateCW {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      @keyframes rotateCCW {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(-360deg); }
+      }
+    </style>
+  </defs>
+
+  <g class="main-float">
+    <!-- Background Ambient Glow -->
+    <g id="glow" class="glow-layer">
+      <circle cx="400" cy="400" r="280" fill="url(#bg-glow)" filter="url(#glow-filter)" />
+    </g>
+
+    <!-- Outer Ring (Back Layer) -->
+    <g id="ring-back" class="ring-outer" filter="url(#drop-shadow)">
+      <g transform="rotate(-30 400 400)">
+        <ellipse cx="400" cy="400" rx="310" ry="110" fill="none" stroke="url(#chrome-ring-1)" stroke-width="22" filter="url(#metallic-specular)" />
+        <ellipse cx="400" cy="400" rx="310" ry="110" fill="none" stroke="#4A4A4A" stroke-width="2" opacity="0.7" />
+        <ellipse cx="400" cy="397" rx="320" ry="113" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.6" />
+        <ellipse cx="400" cy="403" rx="300" ry="107" fill="none" stroke="#6E6E6E" stroke-width="3" opacity="0.8" />
+      </g>
+    </g>
+
+    <!-- Middle Ring -->
+    <g id="ring-middle" class="ring-middle" filter="url(#drop-shadow)">
+      <g transform="rotate(35 400 400)">
+        <ellipse cx="400" cy="400" rx="270" ry="95" fill="none" stroke="url(#chrome-ring-2)" stroke-width="20" filter="url(#metallic-specular)" />
+        <ellipse cx="400" cy="400" rx="270" ry="95" fill="none" stroke="#2A2A2A" stroke-width="1.5" opacity="0.8" />
+        <ellipse cx="400" cy="397" rx="279" ry="98" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.7" />
+        <ellipse cx="400" cy="403" rx="261" ry="92" fill="none" stroke="#4A4A4A" stroke-width="2.5" opacity="0.9" />
+      </g>
+    </g>
+
+    <!-- Central Metallic Sphere -->
+    <g id="sphere" class="sphere-group" filter="url(#drop-shadow)">
+      <circle cx="400" cy="400" r="160" fill="url(#sphere-grad)" filter="url(#metallic-specular)" />
+      <circle cx="400" cy="400" r="160" fill="none" stroke="#4A4A4A" stroke-width="4" opacity="0.4" />
+      <circle cx="380" cy="370" r="135" fill="url(#sphere-specular-grad)" />
+      <ellipse cx="340" cy="310" rx="45" ry="22" fill="#FFFFFF" opacity="0.75" transform="rotate(-25 340 310)" filter="url(#glow-filter)" />
+      <ellipse cx="315" cy="295" rx="12" ry="6" fill="#FFFFFF" opacity="0.9" transform="rotate(-25 315 295)" />
+      <path d="M 490,490 A 158,158 0 0,1 310,540" fill="none" stroke="#E8E8E8" stroke-width="8" opacity="0.4" filter="url(#glow-filter)" />
+    </g>
+
+    <!-- Front Ring -->
+    <g id="ring-front" class="ring-front" filter="url(#drop-shadow)">
+      <g transform="rotate(-70 400 400)">
+        <ellipse cx="400" cy="400" rx="230" ry="80" fill="none" stroke="url(#chrome-ring-3)" stroke-width="18" filter="url(#metallic-specular)" />
+        <ellipse cx="400" cy="400" rx="230" ry="80" fill="none" stroke="#6E6E6E" stroke-width="1.5" opacity="0.6" />
+        <ellipse cx="400" cy="398" rx="238" ry="83" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.8" />
+        <ellipse cx="400" cy="402" rx="222" ry="77" fill="none" stroke="#2A2A2A" stroke-width="2" opacity="0.7" />
+      </g>
+    </g>
+  </g>
+</svg>
